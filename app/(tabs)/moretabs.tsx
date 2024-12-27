@@ -16,7 +16,7 @@ import {
   YStack,
 } from "tamagui";
 import { Minus, Plus } from "@tamagui/lucide-icons";
-
+import { DateBox } from "@/components/DateBox";
 export default function TabTwoScreen() {
   const [date, setDate] = useState(new Date(0));
   const [endDutyDay, setEndDutyDay] = useState(
@@ -356,62 +356,16 @@ export default function TabTwoScreen() {
               </View>
             </View>
           </XStack>
-          <XStack
-            style={styles.box}
-            flexWrap="wrap"
-            alignItems="center"
-            justifyContent="center"
-          >
-            <View
-              style={[
-                styles.container,
-                {
-                  // Try setting `flexDirection` to `"row"`.
-                  flexDirection: "row",
-                  justifyContent: "center",
-                },
-              ]}
-            >
-              <View style={{ flex: 4, justifyContent: "flex-start" }}>
-                <Text style={styles.text}>Duty Day</Text>
-              </View>
-              <View style={{ flex: 4, justifyContent: "center" }}>
-                <Text style={styles.text}>{generateDate(endDutyDay)}</Text>
-              </View>
-              <View style={{ flex: 4, justifyContent: "flex-end" }}>
-                <Text style={styles.text}>
-                  <Text style={styles.text}>{generateDate(zuluDutyDay)}</Text>
-                </Text>
-              </View>
-            </View>
-          </XStack>
-          <XStack
-            style={styles.box}
-            flexWrap="wrap"
-            alignItems="center"
-            justifyContent="center"
-          >
-            <View
-              style={[
-                styles.container,
-                {
-                  // Try setting `flexDirection` to `"row"`.
-                  flexDirection: "row",
-                  justifyContent: "center",
-                },
-              ]}
-            >
-              <View style={{ flex: 4, justifyContent: "flex-start" }}>
-                <Text style={styles.text}>Aug Duty Day</Text>
-              </View>
-              <View style={{ flex: 4, justifyContent: "center" }}>
-                <Text style={styles.text}>{generateDate(endAugDutyDay)}</Text>
-              </View>
-              <View style={{ flex: 4, justifyContent: "flex-end" }}>
-                <Text style={styles.text}>{generateDate(zuluAugDay)}</Text>
-              </View>
-            </View>
-          </XStack>
+          <DateBox
+            name="Duty Day"
+            date={endDutyDay}
+            zuluDate={zuluDutyDay}
+          ></DateBox>
+          <DateBox
+            name="Aug Duty Day"
+            date={endAugDutyDay}
+            zuluDate={zuluAugDay}
+          ></DateBox>
         </YStack>
       </ScrollView>
     </SafeAreaView>
