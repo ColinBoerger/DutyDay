@@ -3,11 +3,17 @@ import { StyleSheet } from "react-native";
 
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
+import { Button } from "tamagui";
 
 export default function TimeCalc() {
   return (
     <>
-      <Stack.Screen options={{ title: "Time Calc" }} />
+      <Stack.Screen
+        options={{
+          headerShown: true,
+          headerBackTitle: "Home",
+        }}
+      />
       <ThemedView style={styles.container}>
         <ThemedText type="title">This screen Exists</ThemedText>
       </ThemedView>
