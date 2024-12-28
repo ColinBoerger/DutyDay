@@ -18,6 +18,8 @@ SplashScreen.preventAutoHideAsync();
 
 const config = createTamagui(defaultConfig);
 
+import * as React from "react";
+
 export default function RootLayout() {
   const colorScheme = useColorScheme();
   const [loaded] = useFonts({

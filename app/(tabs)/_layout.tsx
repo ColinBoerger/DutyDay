@@ -1,13 +1,12 @@
 import { Tabs } from "expo-router";
 import React from "react";
 import { Platform } from "react-native";
-
 import { HapticTab } from "@/components/HapticTab";
 import { IconSymbol } from "@/components/ui/IconSymbol";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import TabBarBackground from "@/components/ui/TabBarBackground";
 import { Colors } from "@/constants/Colors";
 import { useColorScheme } from "@/hooks/useColorScheme";
-import { Beef } from "@tamagui/lucide-icons";
 export default function TabLayout() {
   const colorScheme = useColorScheme();
 
@@ -32,24 +31,17 @@ export default function TabLayout() {
         options={{
           title: "Home",
           tabBarIcon: ({ color }) => (
-            <IconSymbol size={28} name="house.fill" color={color} />
+            <MaterialIcons name="home" size={24} color={color} />
           ),
         }}
       />
       <Tabs.Screen
-        name="explore"
+        name="settings"
         options={{
-          title: "Explore",
+          title: "Settings",
           tabBarIcon: ({ color }) => (
-            <IconSymbol size={28} name="paperplane.fill" color={color} />
+            <MaterialIcons name="settings" size={24} color={color} />
           ),
-        }}
-      />
-      <Tabs.Screen
-        name="moretabs"
-        options={{
-          title: "BEEF",
-          tabBarIcon: ({ color }) => <Beef></Beef>,
         }}
       />
     </Tabs>
