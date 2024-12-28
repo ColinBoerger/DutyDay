@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { StyleSheet, Image, Platform, SafeAreaView } from "react-native";
 import { Text, View } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
-
+import { EditDateBox } from "@/components/EditableDateBox";
 import { Value } from "react-time-picker/dist/cjs/shared/types";
 import type { SizeTokens } from "tamagui";
 import {
@@ -17,6 +17,7 @@ import {
 } from "tamagui";
 import { Minus, Plus } from "@tamagui/lucide-icons";
 import { DateBox } from "@/components/DateBox";
+import { ZuluOffset } from "@/components/ZuluOffset";
 export default function TabTwoScreen() {
   const [date, setDate] = useState(new Date(0));
   const [endDutyDay, setEndDutyDay] = useState(
@@ -58,7 +59,7 @@ export default function TabTwoScreen() {
     )
   );
 
-  const onChange = (event: any, selectedDate?: Date) => {
+  const onChange = (_: any, selectedDate?: Date) => {
     if (selectedDate) {
       setDate(selectedDate);
       setEndDutyDay(
@@ -272,28 +273,12 @@ export default function TabTwoScreen() {
     <SafeAreaView style={styles.container}>
       <ScrollView maxHeight="90%" width="90%" padding="$4" borderRadius="$4">
         <YStack overflow="hidden" gap="$2" margin="$3" padding="$2">
-          <XStack
-            style={styles.box}
-            flexWrap="wrap"
-            alignItems="center"
-            justifyContent="center"
-          >
-            <Text style={styles.text}>Zulu offset </Text>
-
-            <DateTimePicker
-              testID="dateTimePicker"
-              value={zuluOffset}
-              textColor="white"
-              mode="time"
-              is24Hour={true}
-              minuteInterval={15}
-              onChange={zuluChange}
-            />
-            <Button
-              icon={plusOrMinus ? Plus : Minus}
-              onPress={buttonChange}
-            ></Button>
-          </XStack>
+          <ZuluOffset
+            onChange={zuluChange}
+            buttonChange={buttonChange}
+            date={zuluOffset}
+            plusOrMinus={plusOrMinus}
+          ></ZuluOffset>
           <XStack
             style={styles.box}
             flexWrap="wrap"
@@ -321,41 +306,12 @@ export default function TabTwoScreen() {
               </View>
             </View>
           </XStack>
-          <XStack
-            style={styles.box}
-            flexWrap="wrap"
-            alignItems="center"
-            justifyContent="center"
-          >
-            <View
-              style={[
-                styles.container,
-                {
-                  // Try setting `flexDirection` to `"row"`.
-                  flexDirection: "row",
-                  justifyContent: "center",
-                },
-              ]}
-            >
-              <View style={{ flex: 4, justifyContent: "center" }}>
-                <Text style={styles.text}>Alert</Text>
-              </View>
-              <View style={{ flex: 4, justifyContent: "center" }}>
-                <DateTimePicker
-                  testID="dateTimePicker"
-                  value={date}
-                  textColor="white"
-                  mode="time"
-                  is24Hour={true}
-                  onChange={onChange}
-                  minuteInterval={5}
-                />
-              </View>
-              <View style={{ flex: 4, justifyContent: "center" }}>
-                <Text style={styles.text}>{generateDate(zuluAlert)}</Text>
-              </View>
-            </View>
-          </XStack>
+          <EditDateBox
+            onChange={onChange}
+            name="Alert"
+            date={date}
+            zuluDate={zuluAlert}
+          ></EditDateBox>
           <DateBox
             name="Duty Day"
             date={endDutyDay}
