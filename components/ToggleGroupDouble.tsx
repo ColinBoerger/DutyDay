@@ -1,19 +1,26 @@
 import { AlignCenter, AlignLeft, AlignRight } from "@tamagui/lucide-icons";
 import type { SizeTokens } from "tamagui";
-import { Label, ToggleGroup, XStack, YStack } from "tamagui";
-import React, { FC } from "react";
+import { Label, ToggleGroup, View, XStack, YStack, Text } from "tamagui";
+import { styled } from "tamagui";
+import React, { FC, useState } from "react";
 
-interface ToggleGroupComponentProps {
+interface ToggleGroupDoubleProps {
   size: SizeTokens;
   type: "single" | "multiple";
   orientation: "vertical" | "horizontal";
   name: string;
+  value: string;
+  valuesToToggle: string[];
+  onChange: (value: string) => void;
 }
-export const ToggleGroupComponent: FC<ToggleGroupComponentProps> = ({
+export const ToggleGroupDouble: FC<ToggleGroupDoubleProps> = ({
   size,
   type,
   orientation,
   name,
+  value,
+  valuesToToggle,
+  onChange,
 }) => {
   const id = `switch-${size.toString().slice(1)}-${type}`;
   return (
@@ -32,22 +39,24 @@ export const ToggleGroupComponent: FC<ToggleGroupComponentProps> = ({
         {name}
       </Label>
 
-      {/* @ts-ignore */}
       <ToggleGroup
         orientation={orientation}
         id={id}
         type={type as any} // since this demo switches between loosen types
         size={size}
         disableDeactivation={type === "single" ? true : undefined}
+        onValueChange={onChange}
+        value={value}
       >
-        <ToggleGroup.Item value="left" aria-label="Left aligned">
-          <AlignLeft />
+        <ToggleGroup.Item value={valuesToToggle[0]} aria-label="Left aligned">
+          <View>
+            <Text>{valuesToToggle[0]}</Text>
+          </View>
         </ToggleGroup.Item>
-        <ToggleGroup.Item value="center" aria-label="Center aligned">
-          <AlignCenter />
-        </ToggleGroup.Item>
-        <ToggleGroup.Item value="right" aria-label="Right aligned">
-          <AlignRight />
+        <ToggleGroup.Item value={valuesToToggle[1]} aria-label="Right aligned">
+          <View>
+            <Text>{valuesToToggle[1]}</Text>
+          </View>
         </ToggleGroup.Item>
       </ToggleGroup>
     </XStack>

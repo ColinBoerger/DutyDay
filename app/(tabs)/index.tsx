@@ -13,7 +13,6 @@ import {
   Text,
   View,
 } from "tamagui";
-import { Minus, Plus } from "@tamagui/lucide-icons";
 import { DateBox } from "@/components/DateBox";
 import { ZuluOffset } from "@/components/ZuluOffset";
 export default function TabTwoScreen() {
@@ -352,7 +351,6 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: "#25292e",
     alignItems: "center",
     justifyContent: "center",
   },
