@@ -15,6 +15,7 @@ import {
 } from "tamagui";
 import { DateBox } from "@/components/DateBox";
 import { ZuluOffset } from "@/components/ZuluOffset";
+import { Link } from "expo-router";
 export default function TabTwoScreen() {
   const [date, setDate] = useState(new Date(0));
   const [endDutyDay, setEndDutyDay] = useState(
@@ -269,6 +270,9 @@ export default function TabTwoScreen() {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView maxHeight="90%" width="90%" padding="$4" borderRadius="$4">
+        <Link href={"/timeCalc"}>
+          <Text>Click</Text>
+        </Link>
         <YStack overflow="hidden" gap="$2" margin="$3" padding="$2">
           <ZuluOffset
             onChange={zuluChange}
