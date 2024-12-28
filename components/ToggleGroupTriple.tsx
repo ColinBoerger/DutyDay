@@ -48,14 +48,20 @@ export const ToggleGroupTriple: FC<ToggleGroupTripleProps> = ({
         onValueChange={onChange}
         value={value}
       >
-        <ToggleGroup.Item value="left" aria-label="Left aligned">
+        <ToggleGroup.Item value={valuesToToggle[0]} aria-label="Left aligned">
           <View>
-            <Text>Normal</Text>
+            <Text>{valuesToToggle[0]}</Text>
           </View>
         </ToggleGroup.Item>
-        <ToggleGroup.Item value="right" aria-label="Right aligned">
+
+        <ToggleGroup.Item value={valuesToToggle[1]} aria-label="Center aligned">
           <View>
-            <Text>Augemented</Text>
+            <Text>{valuesToToggle[1]}</Text>
+          </View>
+        </ToggleGroup.Item>
+        <ToggleGroup.Item value={valuesToToggle[2]} aria-label="Right aligned">
+          <View>
+            <Text>{valuesToToggle[2]}</Text>
           </View>
         </ToggleGroup.Item>
       </ToggleGroup>

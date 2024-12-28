@@ -33,6 +33,8 @@ export default function TabLayout() {
           tabBarIcon: ({ color }) => (
             <MaterialIcons name="home" size={24} color={color} />
           ),
+          headerShown: true,
+          headerTitle: "C-130 Duty Day Calculator",
         }}
       />
       <Tabs.Screen
@@ -42,6 +44,7 @@ export default function TabLayout() {
           tabBarIcon: ({ color }) => (
             <MaterialIcons name="settings" size={24} color={color} />
           ),
+          headerShown: true,
         }}
       />
     </Tabs>

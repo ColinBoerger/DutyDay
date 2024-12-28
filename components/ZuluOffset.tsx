@@ -24,7 +24,7 @@ export const ZuluOffset: FC<ZuluOffsetProps> = ({
   return (
     <View>
       <XStack
-        style={styles.box}
+        // style={styles.box}
         flexWrap="wrap"
         alignItems="center"
         justifyContent="center"
