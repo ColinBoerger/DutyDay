@@ -15,16 +15,23 @@ import {
   Text,
   ScrollView,
 } from "tamagui";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { storeData } from "@/utils/SetGetData";
+import { storeBool, storeDataString, storeTime } from "@/utils/SetGetData";
 
 export default function TabTwoScreen() {
   const [dutyDay, setDutyDay] = useState("Normal");
   const [soe, setSoe] = useState("2+15");
   const [plusOrMinus, setPlusOrMinus] = useState(true);
   const [zuluOffset, setZuluOffset] = useState(new Date(0, 0, 0, 0, 0));
-  const zuluChange = (event: any, selectedDate?: Date) => {};
-  const buttonChange = (event: any) => {};
+  const zuluChange = async (event: any, selectedDate?: Date) => {
+    if (selectedDate) {
+      storeTime(selectedDate, "zulu");
+      setZuluOffset(selectedDate);
+    }
+  };
+  const buttonChange = async (event: any) => {
+    storeBool(!plusOrMinus, "plusOrMinus");
+    setPlusOrMinus(!plusOrMinus);
+  };
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView maxHeight="90%" width="90%" padding="$4" borderRadius="$4">
@@ -37,7 +44,7 @@ export default function TabTwoScreen() {
             name="Duty Day Type"
             onChange={(value: string) => {
               setDutyDay(value);
-              storeData(value, "duty-day-type");
+              storeDataString(value, "duty-day-type");
             }}
             value={dutyDay}
             valuesToToggle={["Normal", "Augmented"]}
@@ -50,7 +57,7 @@ export default function TabTwoScreen() {
             id="SOE-1"
             onChange={(value: string) => {
               setSoe(value);
-              storeData(value, "soe");
+              storeDataString(value, "soe");
             }}
             value={soe}
             valuesToToggle={["2+15", "3+15", "3+45"]}

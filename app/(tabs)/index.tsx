@@ -14,9 +14,10 @@ import {
   View,
 } from "tamagui";
 import { DateBox } from "@/components/DateBox";
-import { ZuluOffset } from "@/components/ZuluOffset";
 import { Link } from "expo-router";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { getMyDate } from "@/utils/SetGetData";
+import { useZulu } from "@/hooks/useZulu";
+
 export default function TabTwoScreen() {
   const [date, setDate] = useState(new Date(0));
   const [endDutyDay, setEndDutyDay] = useState(
@@ -26,16 +27,18 @@ export default function TabTwoScreen() {
     new Date(2000, 1, 1, date.getHours() + 18, date.getMinutes())
   );
 
+  const zuluOffset = useZulu();
+  //const plusOrMinus = usePlusOrMinus;
   const [plusOrMinus, setPlusOrMinus] = useState(true);
-  const [zuluOffset, setZuluOffset] = useState(new Date(0, 0, 0, 0, 0));
+  //const [zuluOffset, setZuluOffset] = useState(new Date(0, 0, 0, 0, 0));
 
   const [zuluAlert, setZuluAlert] = useState(
     new Date(
       2000,
       1,
       1,
-      date.getHours() + zuluOffset.getHours(),
-      date.getMinutes() + zuluOffset.getMinutes()
+      date.getHours() + (zuluOffset?.getHours() ?? 0),
+      date.getMinutes() + (zuluOffset?.getMinutes() ?? 0)
     )
   );
   const [zuluDutyDay, setZuluDutyDay] = useState(
@@ -43,8 +46,8 @@ export default function TabTwoScreen() {
       2000,
       1,
       1,
-      endDutyDay.getHours() + zuluOffset.getHours(),
-      endDutyDay.getMinutes() + zuluOffset.getMinutes()
+      endDutyDay.getHours() + (zuluOffset?.getHours() ?? 0),
+      endDutyDay.getMinutes() + (zuluOffset?.getMinutes() ?? 0)
     )
   );
 
@@ -53,11 +56,10 @@ export default function TabTwoScreen() {
       2000,
       1,
       1,
-      endAugDutyDay.getHours() + zuluOffset.getHours(),
-      endAugDutyDay.getMinutes() + zuluOffset.getMinutes()
+      endAugDutyDay.getHours() + (zuluOffset?.getHours() ?? 0),
+      endAugDutyDay.getMinutes() + (zuluOffset?.getMinutes() ?? 0)
     )
   );
-
   const onChange = (_: any, selectedDate?: Date) => {
     if (selectedDate) {
       setDate(selectedDate);
@@ -85,8 +87,8 @@ export default function TabTwoScreen() {
             2000,
             1,
             1,
-            date.getHours() + zuluOffset.getHours(),
-            date.getMinutes() + zuluOffset.getMinutes()
+            date.getHours() + (zuluOffset?.getHours() ?? 0),
+            date.getMinutes() + (zuluOffset?.getMinutes() ?? 0)
           )
         );
         setZuluDutyDay(
@@ -94,8 +96,8 @@ export default function TabTwoScreen() {
             2000,
             1,
             1,
-            endDutyDay.getHours() + zuluOffset.getHours(),
-            endDutyDay.getMinutes() + zuluOffset.getMinutes()
+            endDutyDay.getHours() + (zuluOffset?.getHours() ?? 0),
+            endDutyDay.getMinutes() + (zuluOffset?.getMinutes() ?? 0)
           )
         );
         setZuluAugDay(
@@ -103,8 +105,8 @@ export default function TabTwoScreen() {
             2000,
             1,
             1,
-            endAugDutyDay.getHours() + zuluOffset.getHours(),
-            endAugDutyDay.getMinutes() + zuluOffset.getMinutes()
+            endAugDutyDay.getHours() + (zuluOffset?.getHours() ?? 0),
+            endAugDutyDay.getMinutes() + (zuluOffset?.getMinutes() ?? 0)
           )
         );
       } else {
@@ -113,8 +115,8 @@ export default function TabTwoScreen() {
             2000,
             1,
             1,
-            date.getHours() - zuluOffset.getHours(),
-            date.getMinutes() - zuluOffset.getMinutes()
+            date.getHours() - (zuluOffset?.getHours() ?? 0),
+            date.getMinutes() - (zuluOffset?.getMinutes() ?? 0)
           )
         );
 
@@ -123,8 +125,8 @@ export default function TabTwoScreen() {
             2000,
             1,
             1,
-            endDutyDay.getHours() - zuluOffset.getHours(),
-            endDutyDay.getMinutes() - zuluOffset.getMinutes()
+            endDutyDay.getHours() - (zuluOffset?.getHours() ?? 0),
+            endDutyDay.getMinutes() - (zuluOffset?.getMinutes() ?? 0)
           )
         );
         setZuluAugDay(
@@ -132,8 +134,8 @@ export default function TabTwoScreen() {
             2000,
             1,
             1,
-            endAugDutyDay.getHours() - zuluOffset.getHours(),
-            endAugDutyDay.getMinutes() - zuluOffset.getMinutes()
+            endAugDutyDay.getHours() - (zuluOffset?.getHours() ?? 0),
+            endAugDutyDay.getMinutes() - (zuluOffset?.getMinutes() ?? 0)
           )
         );
       }
@@ -141,145 +143,7 @@ export default function TabTwoScreen() {
 
     return date;
   };
-  const zuluChange = (event: any, selectedDate?: Date) => {
-    if (selectedDate) {
-      setZuluOffset(selectedDate);
-      if (plusOrMinus) {
-        setZuluAlert(
-          new Date(
-            2000,
-            1,
-            1,
-            date.getHours() + selectedDate.getHours(),
-            date.getMinutes() + selectedDate.getMinutes()
-          )
-        );
-        setZuluDutyDay(
-          new Date(
-            2000,
-            1,
-            1,
-            endDutyDay.getHours() + selectedDate.getHours(),
-            endDutyDay.getMinutes() + selectedDate.getMinutes()
-          )
-        );
-        setZuluAugDay(
-          new Date(
-            2000,
-            1,
-            1,
-            endAugDutyDay.getHours() + selectedDate.getHours(),
-            endAugDutyDay.getMinutes() + selectedDate.getMinutes()
-          )
-        );
-      } else {
-        setZuluAlert(
-          new Date(
-            2000,
-            1,
-            1,
-            date.getHours() - selectedDate.getHours(),
-            date.getMinutes() - selectedDate.getMinutes()
-          )
-        );
 
-        setZuluDutyDay(
-          new Date(
-            2000,
-            1,
-            1,
-            endDutyDay.getHours() - selectedDate.getHours(),
-            endDutyDay.getMinutes() - selectedDate.getMinutes()
-          )
-        );
-        setZuluAugDay(
-          new Date(
-            2000,
-            1,
-            1,
-            endAugDutyDay.getHours() - selectedDate.getHours(),
-            endAugDutyDay.getMinutes() - selectedDate.getMinutes()
-          )
-        );
-      }
-    }
-  };
-
-  const buttonChange = async (event: any) => {
-    const toLog = await getMyStringValue("soe");
-    console.log(toLog);
-    let valueP = !plusOrMinus;
-    setPlusOrMinus(!plusOrMinus);
-    if (valueP) {
-      setZuluAlert(
-        new Date(
-          2000,
-          1,
-          1,
-          date.getHours() + zuluOffset.getHours(),
-          date.getMinutes() + zuluOffset.getMinutes()
-        )
-      );
-      setZuluDutyDay(
-        new Date(
-          2000,
-          1,
-          1,
-          endDutyDay.getHours() + zuluOffset.getHours(),
-          endDutyDay.getMinutes() + zuluOffset.getMinutes()
-        )
-      );
-      setZuluAugDay(
-        new Date(
-          2000,
-          1,
-          1,
-          endAugDutyDay.getHours() + zuluOffset.getHours(),
-          endAugDutyDay.getMinutes() + zuluOffset.getMinutes()
-        )
-      );
-    } else {
-      setZuluAlert(
-        new Date(
-          2000,
-          1,
-          1,
-          date.getHours() - zuluOffset.getHours(),
-          date.getMinutes() - zuluOffset.getMinutes()
-        )
-      );
-
-      setZuluDutyDay(
-        new Date(
-          2000,
-          1,
-          1,
-          endDutyDay.getHours() - zuluOffset.getHours(),
-          endDutyDay.getMinutes() - zuluOffset.getMinutes()
-        )
-      );
-      setZuluAugDay(
-        new Date(
-          2000,
-          1,
-          1,
-          endAugDutyDay.getHours() - zuluOffset.getHours(),
-          endAugDutyDay.getMinutes() - zuluOffset.getMinutes()
-        )
-      );
-    }
-  };
-  const getMyStringValue = async (key: string) => {
-    try {
-      const value = await AsyncStorage.getItem(key);
-      if (value != null) {
-        return value;
-      }
-      return null;
-    } catch (e) {
-      // read error
-    }
-  };
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView maxHeight="90%" width="90%" padding="$4" borderRadius="$4">
@@ -287,12 +151,6 @@ export default function TabTwoScreen() {
           <Text>Click</Text>
         </Link>
         <YStack overflow="hidden" gap="$2" margin="$3" padding="$2">
-          <ZuluOffset
-            onChange={zuluChange}
-            buttonChange={buttonChange}
-            date={zuluOffset}
-            plusOrMinus={plusOrMinus}
-          ></ZuluOffset>
           <XStack
             style={styles.box}
             flexWrap="wrap"

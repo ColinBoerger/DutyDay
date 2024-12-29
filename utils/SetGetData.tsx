@@ -12,9 +12,36 @@ export const getMyStringValue = async (key: string) => {
   }
 };
 
-export const storeData = async (value: string, key: string) => {
+export const getMyDate = async (key: string) => {
+  try {
+    const jsonValue = await AsyncStorage.getItem(key);
+    return jsonValue != null ? JSON.parse(jsonValue) : null;
+  } catch (e) {
+    // read error
+  }
+};
+
+export const storeDataString = async (value: string, key: string) => {
   try {
     await AsyncStorage.setItem(key, value);
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const storeTime = async (time: Date, key: string) => {
+  try {
+    const jsonValue = JSON.stringify(time);
+    await AsyncStorage.setItem(key, jsonValue);
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const storeBool = async (plusOrMinus: boolean, key: string) => {
+  try {
+    const jsonValue = JSON.stringify(plusOrMinus);
+    await AsyncStorage.setItem(key, jsonValue);
   } catch (e) {
     console.log(e);
   }

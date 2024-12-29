@@ -1,7 +1,5 @@
-import { AlignCenter, AlignLeft, AlignRight } from "@tamagui/lucide-icons";
 import type { SizeTokens } from "tamagui";
 import { Label, ToggleGroup, View, XStack, YStack, Text } from "tamagui";
-import { styled } from "tamagui";
 import React, { FC, useState } from "react";
 
 //TODO: Combine with double
