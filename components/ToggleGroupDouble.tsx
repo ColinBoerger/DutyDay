@@ -8,6 +8,7 @@ interface ToggleGroupDoubleProps {
   orientation: "vertical" | "horizontal";
   name: string;
   value: string;
+  id: string;
   valuesToToggle: string[];
   onChange: (value: string) => void;
 }
@@ -18,9 +19,9 @@ export const ToggleGroupDouble: FC<ToggleGroupDoubleProps> = ({
   name,
   value,
   valuesToToggle,
+  id,
   onChange,
 }) => {
-  const id = `switch-${size.toString().slice(1)}-${type}`;
   return (
     <XStack
       flexDirection={orientation === "horizontal" ? "row" : "column"}
@@ -46,12 +47,12 @@ export const ToggleGroupDouble: FC<ToggleGroupDoubleProps> = ({
         onValueChange={onChange}
         value={value}
       >
-        <ToggleGroup.Item value={valuesToToggle[0]} aria-label="Left aligned">
+        <ToggleGroup.Item value={valuesToToggle[0]}>
           <View>
             <Text>{valuesToToggle[0]}</Text>
           </View>
         </ToggleGroup.Item>
-        <ToggleGroup.Item value={valuesToToggle[1]} aria-label="Right aligned">
+        <ToggleGroup.Item value={valuesToToggle[1]}>
           <View>
             <Text>{valuesToToggle[1]}</Text>
           </View>

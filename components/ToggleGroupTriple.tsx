@@ -4,6 +4,7 @@ import { Label, ToggleGroup, View, XStack, YStack, Text } from "tamagui";
 import { styled } from "tamagui";
 import React, { FC, useState } from "react";
 
+//TODO: Combine with double
 interface ToggleGroupTripleProps {
   size: SizeTokens;
   type: "single" | "multiple";
@@ -11,6 +12,7 @@ interface ToggleGroupTripleProps {
   name: string;
   value: string;
   valuesToToggle: string[];
+  id: string;
   onChange: (value: string) => void;
 }
 export const ToggleGroupTriple: FC<ToggleGroupTripleProps> = ({
@@ -20,9 +22,9 @@ export const ToggleGroupTriple: FC<ToggleGroupTripleProps> = ({
   name,
   value,
   valuesToToggle,
+  id,
   onChange,
 }) => {
-  const id = `switch-${size.toString().slice(1)}-${type}`;
   return (
     <XStack
       flexDirection={orientation === "horizontal" ? "row" : "column"}
@@ -48,18 +50,18 @@ export const ToggleGroupTriple: FC<ToggleGroupTripleProps> = ({
         onValueChange={onChange}
         value={value}
       >
-        <ToggleGroup.Item value={valuesToToggle[0]} aria-label="Left aligned">
+        <ToggleGroup.Item value={valuesToToggle[0]}>
           <View>
             <Text>{valuesToToggle[0]}</Text>
           </View>
         </ToggleGroup.Item>
 
-        <ToggleGroup.Item value={valuesToToggle[1]} aria-label="Center aligned">
+        <ToggleGroup.Item value={valuesToToggle[1]}>
           <View>
             <Text>{valuesToToggle[1]}</Text>
           </View>
         </ToggleGroup.Item>
-        <ToggleGroup.Item value={valuesToToggle[2]} aria-label="Right aligned">
+        <ToggleGroup.Item value={valuesToToggle[2]}>
           <View>
             <Text>{valuesToToggle[2]}</Text>
           </View>

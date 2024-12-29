@@ -3,7 +3,6 @@ import { StyleSheet, Image, Platform, SafeAreaView } from "react-native";
 import { Text } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 
-import { Value } from "react-time-picker/dist/cjs/shared/types";
 import type { SizeTokens } from "tamagui";
 import { Button, View, XStack } from "tamagui";
 import { Minus, Plus } from "@tamagui/lucide-icons";

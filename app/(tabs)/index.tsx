@@ -16,6 +16,7 @@ import {
 import { DateBox } from "@/components/DateBox";
 import { ZuluOffset } from "@/components/ZuluOffset";
 import { Link } from "expo-router";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 export default function TabTwoScreen() {
   const [date, setDate] = useState(new Date(0));
   const [endDutyDay, setEndDutyDay] = useState(
@@ -204,7 +205,9 @@ export default function TabTwoScreen() {
     }
   };
 
-  const buttonChange = (event: any) => {
+  const buttonChange = async (event: any) => {
+    const toLog = await getMyStringValue("soe");
+    console.log(toLog);
     let valueP = !plusOrMinus;
     setPlusOrMinus(!plusOrMinus);
     if (valueP) {
@@ -266,7 +269,17 @@ export default function TabTwoScreen() {
       );
     }
   };
-
+  const getMyStringValue = async (key: string) => {
+    try {
+      const value = await AsyncStorage.getItem(key);
+      if (value != null) {
+        return value;
+      }
+      return null;
+    } catch (e) {
+      // read error
+    }
+  };
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView maxHeight="90%" width="90%" padding="$4" borderRadius="$4">

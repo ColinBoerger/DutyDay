@@ -14,8 +14,9 @@ import {
   YStack,
   Text,
   ScrollView,
-  ToggleGroup,
 } from "tamagui";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { storeData } from "@/utils/SetGetData";
 
 export default function TabTwoScreen() {
   const [dutyDay, setDutyDay] = useState("Normal");
@@ -30,11 +31,13 @@ export default function TabTwoScreen() {
         <YStack overflow="hidden" gap="$2" margin="$3" padding="$2">
           <ToggleGroupDouble
             size="$3"
+            id="DUTYDAY TYPE"
             orientation="horizontal"
             type="single"
             name="Duty Day Type"
             onChange={(value: string) => {
               setDutyDay(value);
+              storeData(value, "duty-day-type");
             }}
             value={dutyDay}
             valuesToToggle={["Normal", "Augmented"]}
@@ -44,8 +47,10 @@ export default function TabTwoScreen() {
             orientation="horizontal"
             type="single"
             name="SOE"
+            id="SOE-1"
             onChange={(value: string) => {
               setSoe(value);
+              storeData(value, "soe");
             }}
             value={soe}
             valuesToToggle={["2+15", "3+15", "3+45"]}
