@@ -16,16 +16,19 @@ import {
   ScrollView,
 } from "tamagui";
 import { storeBool, storeDataString, storeTime } from "@/utils/SetGetData";
+import { useZulu } from "@/hooks/useZulu";
 
 export default function TabTwoScreen() {
   const [dutyDay, setDutyDay] = useState("Normal");
   const [soe, setSoe] = useState("2+15");
   const [plusOrMinus, setPlusOrMinus] = useState(true);
-  const [zuluOffset, setZuluOffset] = useState(new Date(0, 0, 0, 0, 0));
-  const zuluChange = async (event: any, selectedDate?: Date) => {
+  const { zulu, setZulu } = useZulu();
+  console.log("changing in settings", zulu.getHours());
+  const zuluChange = (event: any, selectedDate?: Date) => {
+    console.log("New date is", selectedDate?.getHours());
     if (selectedDate) {
-      storeTime(selectedDate, "zulu");
-      setZuluOffset(selectedDate);
+      setZulu(selectedDate);
+      // setZuluOffset(selectedDate);
     }
   };
   const buttonChange = async (event: any) => {
@@ -65,7 +68,7 @@ export default function TabTwoScreen() {
           <ZuluOffset
             onChange={zuluChange}
             buttonChange={buttonChange}
-            date={zuluOffset}
+            date={zulu}
             plusOrMinus={plusOrMinus}
           ></ZuluOffset>
         </YStack>
