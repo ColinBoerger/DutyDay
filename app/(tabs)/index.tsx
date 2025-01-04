@@ -7,9 +7,49 @@ import { Link } from "expo-router";
 import { getMyDate } from "@/utils/SetGetData";
 import { useZulu } from "@/hooks/useZulu";
 import { usePlusMinus } from "@/hooks/usePlusMinus";
+import { useSOE } from "@/hooks/useSOE";
 
 export default function TabTwoScreen() {
   const [date, setDate] = useState(new Date(0, 0, 0, 0, 0));
+  const [prevLand, setPrevLand] = useState(
+    new Date(0, 0, 0, date.getHours() - 16, 0)
+  );
+
+  const { soe, setSOE } = useSOE();
+  let minutes = 0;
+  let hours = 0;
+  console.log(soe);
+  if (soe === "2+15") {
+    minutes = 15;
+    hours = 2;
+  } else if (soe === "3+15") {
+    minutes = 15;
+    hours = 3;
+  } else if (soe === "3+45") {
+    minutes = 45;
+    hours = 3;
+  }
+
+  const [takeOff, setTakeOff] = useState(
+    new Date(0, 0, 0, date.getHours() + hours, date.getMinutes() + minutes)
+  );
+
+  const lastBeer = new Date(
+    2000,
+    1,
+    1,
+    takeOff.getHours() - 12,
+    takeOff.getMinutes()
+  );
+
+  const lastAmbien = new Date(
+    2000,
+    1,
+    1,
+    takeOff.getHours() - 8,
+    takeOff.getMinutes()
+  );
+
   const endDutyDay = new Date(
     2000,
     1,
@@ -33,14 +73,35 @@ export default function TabTwoScreen() {
   if (!plusMinus) {
     plusOrMinusFactor = -1;
   }
+
+  const lastBeerZulu = new Date(
+    2000,
+    1,
+    1,
+    lastBeer.getHours() + zuluOffset.getHours() * plusOrMinusFactor,
+    lastBeer.getMinutes() + zuluOffset.getMinutes() * plusOrMinusFactor
+  );
+  const lastAmbienZulu = new Date(
+    2000,
+    1,
+    1,
+    lastAmbien.getHours() + zuluOffset.getHours() * plusOrMinusFactor,
+    lastAmbien.getMinutes() + zuluOffset.getMinutes() * plusOrMinusFactor
+  );
   const zuluAlert = new Date(
     2000,
     1,
     1,
     date.getHours() + zuluOffset.getHours() * plusOrMinusFactor,
-    date.getMinutes() + zuluOffset.getMinutes()
+    date.getMinutes() + zuluOffset.getMinutes() * plusOrMinusFactor
   );
-
+  const zuluTakeOff = new Date(
+    2000,
+    1,
+    1,
+    takeOff.getHours() + zuluOffset.getHours() * plusOrMinusFactor,
+    takeOff.getMinutes() + zuluOffset.getMinutes() * plusOrMinusFactor
+  );
   const zuluDutyDay = new Date(
     2000,
     1,
@@ -56,14 +117,61 @@ export default function TabTwoScreen() {
     endAugDutyDay.getHours() + (zuluOffset?.getHours() ?? 0),
     endAugDutyDay.getMinutes() + (zuluOffset?.getMinutes() ?? 0)
   );
+  const onChangeLand = (_: any, selectedDate?: Date) => {
+    if (selectedDate) {
+      setPrevLand(selectedDate);
+      setDate(
+        new Date(
+          0,
+          0,
+          0,
+          selectedDate.getHours() + 16,
+          selectedDate.getMinutes()
+        )
+      );
+      setTakeOff(
+        new Date(
+          0,
+          0,
+          0,
+          selectedDate.getHours() + 16 + hours,
+          selectedDate.getMinutes() + minutes
+        )
+      );
+    }
+    return prevLand;
+  };
   const onChange = (_: any, selectedDate?: Date) => {
     if (selectedDate) {
       setDate(selectedDate);
+      setTakeOff(
+        new Date(
+          0,
+          0,
+          0,
+          selectedDate.getHours() + hours,
+          selectedDate.getMinutes() + minutes
+        )
+      );
     }
-
     return date;
   };
 
+  const onChangeTakeOff = (_: any, selectedDate?: Date) => {
+    if (selectedDate) {
+      setTakeOff(selectedDate);
+      setDate(
+        new Date(
+          0,
+          0,
+          0,
+          selectedDate.getHours() - hours,
+          selectedDate.getMinutes() - minutes
+        )
+      );
+    }
+    return takeOff;
+  };
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView maxHeight="90%" width="90%" padding="$4" borderRadius="$4">
@@ -97,10 +205,34 @@ export default function TabTwoScreen() {
             </View>
           </XStack>
           <EditDateBox
+            onChange={onChangeLand}
+            name="Land Time"
+            date={prevLand}
+            zuluDate={zuluAlert}
+          />
+          <DateBox name="Last Beer" date={lastBeer} zuluDate={lastBeerZulu} />
+          <DateBox
+            name="Last Ambien"
+            date={lastAmbien}
+            zuluDate={lastAmbienZulu}
+          />
+          <EditDateBox
             onChange={onChange}
             name="Alert"
             date={date}
             zuluDate={zuluAlert}
+          />
+          <EditDateBox
+            onChange={onChangeTakeOff}
+            name="T/O"
+            date={takeOff}
+            zuluDate={zuluTakeOff}
+          />
+
+          <DateBox
+            name="Last Tac Event"
+            date={endDutyDay}
+            zuluDate={zuluDutyDay}
           />
           <DateBox name="Duty Day" date={endDutyDay} zuluDate={zuluDutyDay} />
           <DateBox
