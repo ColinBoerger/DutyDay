@@ -17,23 +17,25 @@ import {
 } from "tamagui";
 import { storeBool, storeDataString, storeTime } from "@/utils/SetGetData";
 import { useZulu } from "@/hooks/useZulu";
+import { usePlusMinus } from "@/hooks/usePlusMinus";
 
 export default function TabTwoScreen() {
   const [dutyDay, setDutyDay] = useState("Normal");
   const [soe, setSoe] = useState("2+15");
-  const [plusOrMinus, setPlusOrMinus] = useState(true);
+  //const [plusOrMinus, setPlusOrMinus] = useState(true);
   const { zulu, setZulu } = useZulu();
-  console.log("changing in settings", zulu.getHours());
+  const { plusMinus, setPlusMinus } = usePlusMinus();
+  //  console.log("changing in settings", zulu.getHours());
   const zuluChange = (event: any, selectedDate?: Date) => {
-    console.log("New date is", selectedDate?.getHours());
+    //   console.log("New date is", selectedDate?.getHours());
     if (selectedDate) {
       setZulu(selectedDate);
       // setZuluOffset(selectedDate);
     }
   };
-  const buttonChange = async (event: any) => {
-    storeBool(!plusOrMinus, "plusOrMinus");
-    setPlusOrMinus(!plusOrMinus);
+  const buttonChange = (event: any) => {
+    setPlusMinus(!plusMinus);
+    console.log(!plusMinus);
   };
   return (
     <SafeAreaView style={styles.container}>
@@ -69,7 +71,7 @@ export default function TabTwoScreen() {
             onChange={zuluChange}
             buttonChange={buttonChange}
             date={zulu}
-            plusOrMinus={plusOrMinus}
+            plusOrMinus={plusMinus}
           ></ZuluOffset>
         </YStack>
       </ScrollView>

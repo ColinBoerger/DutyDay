@@ -10,7 +10,7 @@ export const useZulu = () => {
   const [zuluString, setZuluString] = useAtom(useZuluAtom);
   const zulu = new Date(zuluString);
 
-  console.log("changing in hook", zulu.getHours());
+  //  console.log("changing in hook", zulu.getHours());
 
   const setZulu = (newZulu: Date) => {
     setZuluString(newZulu.toISOString());

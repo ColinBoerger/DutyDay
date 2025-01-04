@@ -6,6 +6,7 @@ import { DateBox } from "@/components/DateBox";
 import { Link } from "expo-router";
 import { getMyDate } from "@/utils/SetGetData";
 import { useZulu } from "@/hooks/useZulu";
+import { usePlusMinus } from "@/hooks/usePlusMinus";
 
 export default function TabTwoScreen() {
   const [date, setDate] = useState(new Date(0, 0, 0, 0, 0));
@@ -26,14 +27,17 @@ export default function TabTwoScreen() {
   );
 
   const { zulu: zuluOffset } = useZulu();
-  console.log("changing in index", zuluOffset.getHours());
-  const [plusOrMinus, setPlusOrMinus] = useState(true);
-
+  //  console.log("changing in index", zuluOffset.getHours());
+  const { plusMinus } = usePlusMinus();
+  let plusOrMinusFactor = 1;
+  if (!plusMinus) {
+    plusOrMinusFactor = -1;
+  }
   const zuluAlert = new Date(
     2000,
     1,
     1,
-    date.getHours() + zuluOffset.getHours(),
+    date.getHours() + zuluOffset.getHours() * plusOrMinusFactor,
     date.getMinutes() + zuluOffset.getMinutes()
   );
 
@@ -41,8 +45,9 @@ export default function TabTwoScreen() {
     2000,
     1,
     1,
-    endDutyDay.getHours() + (zuluOffset?.getHours() ?? 0),
-    endDutyDay.getMinutes() + (zuluOffset?.getMinutes() ?? 0)
+    endDutyDay.getHours() + (zuluOffset?.getHours() ?? 0) * plusOrMinusFactor,
+    endDutyDay.getMinutes() +
+      (zuluOffset?.getMinutes() ?? 0) * plusOrMinusFactor
   );
   const zuluAugDay = new Date(
     2000,
