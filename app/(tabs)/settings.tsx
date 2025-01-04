@@ -18,21 +18,21 @@ import {
 import { storeBool, storeDataString, storeTime } from "@/utils/SetGetData";
 import { useZulu } from "@/hooks/useZulu";
 import { usePlusMinus } from "@/hooks/usePlusMinus";
+import { useSOE } from "@/hooks/useSOE";
+import { useDutyDayType } from "@/hooks/useDutyDayType";
 
 export default function TabTwoScreen() {
-  const [dutyDay, setDutyDay] = useState("Normal");
-  const [soe, setSoe] = useState("2+15");
-  //const [plusOrMinus, setPlusOrMinus] = useState(true);
+  const { soe, setSOE } = useSOE();
   const { zulu, setZulu } = useZulu();
   const { plusMinus, setPlusMinus } = usePlusMinus();
-  //  console.log("changing in settings", zulu.getHours());
+  const { dutyDay, setDutyDay } = useDutyDayType();
+
   const zuluChange = (event: any, selectedDate?: Date) => {
-    //   console.log("New date is", selectedDate?.getHours());
     if (selectedDate) {
       setZulu(selectedDate);
-      // setZuluOffset(selectedDate);
     }
   };
+
   const buttonChange = (event: any) => {
     setPlusMinus(!plusMinus);
     console.log(!plusMinus);
@@ -49,7 +49,7 @@ export default function TabTwoScreen() {
             name="Duty Day Type"
             onChange={(value: string) => {
               setDutyDay(value);
-              storeDataString(value, "duty-day-type");
+              console.log(value);
             }}
             value={dutyDay}
             valuesToToggle={["Normal", "Augmented"]}
@@ -61,8 +61,8 @@ export default function TabTwoScreen() {
             name="SOE"
             id="SOE-1"
             onChange={(value: string) => {
-              setSoe(value);
-              storeDataString(value, "soe");
+              setSOE(value);
+              console.log("Changing vale: " + value);
             }}
             value={soe}
             valuesToToggle={["2+15", "3+15", "3+45"]}
