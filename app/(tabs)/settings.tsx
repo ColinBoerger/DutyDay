@@ -1,21 +1,8 @@
-import { Collapsible } from "@/components/Collapsible";
 import { ToggleGroupDouble } from "@/components/ToggleGroupDouble";
 import { ToggleGroupTriple } from "@/components/ToggleGroupTriple";
 import { ZuluOffset } from "@/components/ZuluOffset";
-import { useState } from "react";
 import { StyleSheet, SafeAreaView } from "react-native";
-import {
-  Button,
-  Input,
-  Label,
-  TextArea,
-  View,
-  XStack,
-  YStack,
-  Text,
-  ScrollView,
-} from "tamagui";
-import { storeBool, storeDataString, storeTime } from "@/utils/SetGetData";
+import { YStack, ScrollView } from "tamagui";
 import { useZulu } from "@/hooks/useZulu";
 import { usePlusMinus } from "@/hooks/usePlusMinus";
 import { useSOE } from "@/hooks/useSOE";

@@ -1,9 +1,8 @@
-import React, { FC, useState } from "react";
-import { StyleSheet, Image, Platform, SafeAreaView } from "react-native";
+import React, { FC } from "react";
+import { StyleSheet } from "react-native";
 import { Text } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 
-import type { SizeTokens } from "tamagui";
 import { Button, View, XStack } from "tamagui";
 import { Minus, Plus } from "@tamagui/lucide-icons";
 
@@ -47,16 +46,6 @@ export const ZuluOffset: FC<ZuluOffsetProps> = ({
   );
 };
 const styles = StyleSheet.create({
-  headerImage: {
-    color: "#808080",
-    bottom: -90,
-    left: -35,
-    position: "absolute",
-  },
-  titleContainer: {
-    flexDirection: "row",
-    gap: 8,
-  },
   container: {
     flex: 1,
     alignItems: "center",
@@ -64,18 +53,6 @@ const styles = StyleSheet.create({
   },
   text: {
     color: "white",
-  },
-  left: {
-    justifyContent: "center",
-  },
-  right: {
-    justifyContent: "center",
-  },
-  box: {
-    borderColor: "white",
-    borderWidth: 1,
-    borderStyle: "solid",
-    borderRadius: 3,
-    padding: 5,
+    //fontSize: 32,
   },
 });

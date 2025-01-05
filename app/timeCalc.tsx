@@ -11,7 +11,7 @@ export default function TimeCalc() {
       <Stack.Screen
         options={{
           headerShown: true,
-          headerBackTitle: "Home",
+          headerBackTitle: "Utilities",
         }}
       />
       <ThemedView style={styles.container}>

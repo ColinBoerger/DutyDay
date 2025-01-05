@@ -47,6 +47,16 @@ export default function TabLayout() {
           headerShown: true,
         }}
       />
+      <Tabs.Screen
+        name="utilities"
+        options={{
+          title: "Utilities",
+          tabBarIcon: ({ color }) => (
+            <MaterialIcons name="calculate" size={24} color={color} />
+          ),
+          headerShown: true,
+        }}
+      />
     </Tabs>
   );
 }

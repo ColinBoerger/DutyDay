@@ -1,6 +1,4 @@
-import { getMyDate } from "@/utils/SetGetData";
-import { useEffect, useState } from "react";
-import { atom, useAtom } from "jotai";
+import { useAtom } from "jotai";
 
 import { atomWithStorage } from "jotai/utils";
 
