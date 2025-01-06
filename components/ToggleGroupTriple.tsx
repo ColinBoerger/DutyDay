@@ -30,12 +30,7 @@ export const ToggleGroupTriple: FC<ToggleGroupTripleProps> = ({
       justifyContent="center"
       space="$4"
     >
-      <Label
-        paddingRight="$0"
-        justifyContent="flex-end"
-        size={size}
-        htmlFor={id}
-      >
+      <Label paddingRight="$0" size={size} htmlFor={id} width={80}>
         {name}
       </Label>
 
@@ -48,18 +43,18 @@ export const ToggleGroupTriple: FC<ToggleGroupTripleProps> = ({
         onValueChange={onChange}
         value={value}
       >
-        <ToggleGroup.Item value={valuesToToggle[0]}>
+        <ToggleGroup.Item value={valuesToToggle[0]} width={66}>
           <View>
             <Text>{valuesToToggle[0]}</Text>
           </View>
         </ToggleGroup.Item>
 
-        <ToggleGroup.Item value={valuesToToggle[1]}>
+        <ToggleGroup.Item value={valuesToToggle[1]} width={68}>
           <View>
             <Text>{valuesToToggle[1]}</Text>
           </View>
         </ToggleGroup.Item>
-        <ToggleGroup.Item value={valuesToToggle[2]}>
+        <ToggleGroup.Item value={valuesToToggle[2]} width={66}>
           <View>
             <Text>{valuesToToggle[2]}</Text>
           </View>

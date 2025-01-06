@@ -27,13 +27,14 @@ export const ToggleGroupDouble: FC<ToggleGroupDoubleProps> = ({
       flexDirection={orientation === "horizontal" ? "row" : "column"}
       alignItems="center"
       justifyContent="center"
-      space="$4"
     >
       <Label
         paddingRight="$0"
-        justifyContent="flex-end"
+        // justifyContent="flex-end"
         size={size}
         htmlFor={id}
+        textWrap="wrap"
+        width={100}
       >
         {name}
       </Label>
@@ -47,15 +48,11 @@ export const ToggleGroupDouble: FC<ToggleGroupDoubleProps> = ({
         onValueChange={onChange}
         value={value}
       >
-        <ToggleGroup.Item value={valuesToToggle[0]}>
-          <View>
-            <Text>{valuesToToggle[0]}</Text>
-          </View>
+        <ToggleGroup.Item value={valuesToToggle[0]} width={100}>
+          <Text>{valuesToToggle[0]}</Text>
         </ToggleGroup.Item>
-        <ToggleGroup.Item value={valuesToToggle[1]}>
-          <View>
-            <Text>{valuesToToggle[1]}</Text>
-          </View>
+        <ToggleGroup.Item value={valuesToToggle[1]} width={100}>
+          <Text>{valuesToToggle[1]}</Text>
         </ToggleGroup.Item>
       </ToggleGroup>
     </XStack>

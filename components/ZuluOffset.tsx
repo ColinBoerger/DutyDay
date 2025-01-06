@@ -3,7 +3,7 @@ import { StyleSheet } from "react-native";
 import { Text } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 
-import { Button, View, XStack } from "tamagui";
+import { Button, Label, Separator, View, XStack } from "tamagui";
 import { Minus, Plus } from "@tamagui/lucide-icons";
 
 interface ZuluOffsetProps {
@@ -21,13 +21,10 @@ export const ZuluOffset: FC<ZuluOffsetProps> = ({
 }) => {
   return (
     <View>
-      <XStack
-        // style={styles.box}
-        flexWrap="wrap"
-        alignItems="center"
-        justifyContent="center"
-      >
-        <Text style={styles.text}>Zulu offset </Text>
+      <XStack flexWrap="wrap" alignItems="center">
+        <Label style={styles.text} width={100}>
+          Zulu offset
+        </Label>
 
         <DateTimePicker
           testID="dateTimePicker"
@@ -37,6 +34,8 @@ export const ZuluOffset: FC<ZuluOffsetProps> = ({
           minuteInterval={15}
           onChange={onChange}
         />
+
+        <Separator alignSelf="stretch" vertical marginHorizontal={15} />
         <Button
           icon={plusOrMinus ? Plus : Minus}
           onPress={buttonChange}

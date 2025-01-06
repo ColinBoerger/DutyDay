@@ -2,18 +2,19 @@ import { ToggleGroupDouble } from "@/components/ToggleGroupDouble";
 import { ToggleGroupTriple } from "@/components/ToggleGroupTriple";
 import { ZuluOffset } from "@/components/ZuluOffset";
 import { StyleSheet, SafeAreaView } from "react-native";
-import { YStack, ScrollView } from "tamagui";
+import { YStack, ScrollView, Separator, View } from "tamagui";
 import { useZulu } from "@/hooks/useZulu";
 import { usePlusMinus } from "@/hooks/usePlusMinus";
 import { useSOE } from "@/hooks/useSOE";
 import { useDutyDayType } from "@/hooks/useDutyDayType";
+import { useZuluInputType } from "@/hooks/useZuluInputType";
 
 export default function TabTwoScreen() {
   const { soe, setSOE } = useSOE();
   const { zulu, setZulu } = useZulu();
   const { plusMinus, setPlusMinus } = usePlusMinus();
   const { dutyDay, setDutyDay } = useDutyDayType();
-
+  const { zuluInput, setInputZulu } = useZuluInputType();
   const zuluChange = (event: any, selectedDate?: Date) => {
     if (selectedDate) {
       setZulu(selectedDate);
@@ -26,8 +27,28 @@ export default function TabTwoScreen() {
   };
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView maxHeight="90%" width="90%" padding="$4" borderRadius="$4">
+      <ScrollView
+        style={styles.box}
+        maxHeight="85%"
+        width="90%"
+        padding="$4"
+        borderRadius="$4"
+      >
         <YStack overflow="hidden" gap="$2" margin="$3" padding="$2">
+          <ToggleGroupDouble
+            size="$3"
+            id="DUTYDAY TYPE"
+            orientation="horizontal"
+            type="single"
+            name="Zulu or Local"
+            onChange={(value: string) => {
+              setInputZulu(value);
+              console.log(value);
+            }}
+            value={zuluInput}
+            valuesToToggle={["Zulu", "Local"]}
+          ></ToggleGroupDouble>
+          <Separator marginVertical={10} />
           <ToggleGroupDouble
             size="$3"
             id="DUTYDAY TYPE"
@@ -41,6 +62,8 @@ export default function TabTwoScreen() {
             value={dutyDay}
             valuesToToggle={["Normal", "Augmented"]}
           ></ToggleGroupDouble>
+
+          <Separator marginVertical={10} />
           <ToggleGroupTriple
             size="$3"
             orientation="horizontal"
@@ -54,6 +77,8 @@ export default function TabTwoScreen() {
             value={soe}
             valuesToToggle={["2+15", "3+15", "3+45"]}
           ></ToggleGroupTriple>
+
+          <Separator marginVertical={10} />
           <ZuluOffset
             onChange={zuluChange}
             buttonChange={buttonChange}
@@ -67,16 +92,6 @@ export default function TabTwoScreen() {
 }
 
 const styles = StyleSheet.create({
-  headerImage: {
-    color: "#808080",
-    bottom: -90,
-    left: -35,
-    position: "absolute",
-  },
-  titleContainer: {
-    flexDirection: "row",
-    gap: 8,
-  },
   container: {
     flex: 1,
     alignItems: "center",
@@ -84,6 +99,7 @@ const styles = StyleSheet.create({
   },
   text: {
     color: "white",
+    fontSize: 24,
   },
   box: {
     borderColor: "white",

@@ -7,6 +7,7 @@ import { useZulu } from "@/hooks/useZulu";
 import { usePlusMinus } from "@/hooks/usePlusMinus";
 import { useSOE } from "@/hooks/useSOE";
 import { dateBoxStyles } from "@/components/DateBoxStyles";
+import { useZuluInputType } from "@/hooks/useZuluInputType";
 
 export default function TabTwoScreen() {
   const [date, setDate] = useState(new Date(0, 0, 0, 0, 0));
@@ -14,7 +15,21 @@ export default function TabTwoScreen() {
     new Date(0, 0, 0, date.getHours() - 16, 0)
   );
 
-  const { soe, setSOE } = useSOE();
+  const { soe } = useSOE();
+  const { zuluInput: zuluOrLocal } = useZuluInputType();
+  const { plusMinus } = usePlusMinus();
+  let plusOrMinusFactor = 1;
+  if (!plusMinus) {
+    plusOrMinusFactor = -1;
+  }
+
+  let oppositeZuluOrLocal = "";
+  if (zuluOrLocal === "Zulu") {
+    oppositeZuluOrLocal = "Local";
+  } else {
+    plusOrMinusFactor = plusOrMinusFactor * -1;
+    oppositeZuluOrLocal = "Zulu";
+  }
   let minutes = 0;
   let hours = 0;
   console.log(soe);
@@ -68,11 +83,6 @@ export default function TabTwoScreen() {
 
   const { zulu: zuluOffset } = useZulu();
   //  console.log("changing in index", zuluOffset.getHours());
-  const { plusMinus } = usePlusMinus();
-  let plusOrMinusFactor = 1;
-  if (!plusMinus) {
-    plusOrMinusFactor = -1;
-  }
   const prevLandZulu = new Date(
     2000,
     1,
@@ -156,6 +166,15 @@ export default function TabTwoScreen() {
   };
   const onChange = (_: any, selectedDate?: Date) => {
     if (selectedDate) {
+      setPrevLand(
+        new Date(
+          0,
+          0,
+          0,
+          selectedDate.getHours() - 16 + hours,
+          selectedDate.getMinutes() + minutes
+        )
+      );
       setDate(selectedDate);
       setTakeOff(
         new Date(
@@ -182,6 +201,15 @@ export default function TabTwoScreen() {
           selectedDate.getMinutes() - minutes
         )
       );
+      setPrevLand(
+        new Date(
+          0,
+          0,
+          0,
+          selectedDate.getHours() - 16,
+          selectedDate.getMinutes()
+        )
+      );
     }
     return takeOff;
   };
@@ -191,8 +219,8 @@ export default function TabTwoScreen() {
         <View style={styles.outerBox}>
           <YStack overflow="hidden" gap="$0" margin="$3" padding="$0">
             <XStack style={dateBoxStyles.container} justifyContent="flex-end">
-              <Text style={styles.columnHeader}>Local</Text>
-              <Text style={styles.columnHeader}>Zulu</Text>
+              <Text style={styles.columnHeader}>{zuluOrLocal}</Text>
+              <Text style={styles.columnHeader}>{oppositeZuluOrLocal}</Text>
             </XStack>
             <EditDateBox
               onChange={onChangeLand}
@@ -237,6 +265,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
+    backgroundColor: "black",
   },
   columnHeader: {
     color: "white",
