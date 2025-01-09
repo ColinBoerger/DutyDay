@@ -8,12 +8,14 @@ import { usePlusMinus } from "@/hooks/usePlusMinus";
 import { useSOE } from "@/hooks/useSOE";
 import { useDutyDayType } from "@/hooks/useDutyDayType";
 import { useZuluInputType } from "@/hooks/useZuluInputType";
+import { useGroundTime } from "@/hooks/useGroundTime";
 
 export default function TabTwoScreen() {
   const { soe, setSOE } = useSOE();
+  const { groundTime, setGroundTime } = useGroundTime();
   const { zulu, setZulu } = useZulu();
   const { plusMinus, setPlusMinus } = usePlusMinus();
-  const { dutyDay, setDutyDay } = useDutyDayType();
+  // const { dutyDay, setDutyDay } = useDutyDayType();
   const { zuluInput, setInputZulu } = useZuluInputType();
   const zuluChange = (event: any, selectedDate?: Date) => {
     if (selectedDate) {
@@ -25,34 +27,15 @@ export default function TabTwoScreen() {
     setPlusMinus(!plusMinus);
     console.log(!plusMinus);
   };
+
+  //@TODO Add ground time slider
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView
-        style={styles.box}
-        maxHeight="85%"
-        width="90%"
-        padding="$4"
-        borderRadius="$4"
-      >
-        <YStack overflow="hidden" gap="$2" margin="$3" padding="$2">
-          <ToggleGroupDouble
+      <ScrollView width="90%" padding="$4">
+        <YStack overflow="hidden" gap="$2">
+          {/* <ToggleGroupDouble
             size="$3"
             id="DUTYDAY TYPE"
-            orientation="horizontal"
-            type="single"
-            name="Zulu or Local"
-            onChange={(value: string) => {
-              setInputZulu(value);
-              console.log(value);
-            }}
-            value={zuluInput}
-            valuesToToggle={["Zulu", "Local"]}
-          ></ToggleGroupDouble>
-          <Separator marginVertical={10} />
-          <ToggleGroupDouble
-            size="$3"
-            id="DUTYDAY TYPE"
-            orientation="horizontal"
             type="single"
             name="Duty Day Type"
             onChange={(value: string) => {
@@ -61,7 +44,20 @@ export default function TabTwoScreen() {
             }}
             value={dutyDay}
             valuesToToggle={["Normal", "Augmented"]}
-          ></ToggleGroupDouble>
+          />
+          <Separator marginVertical={10} /> */}
+          <ToggleGroupDouble
+            size="$3"
+            id="DUTYDAY TYPE"
+            type="single"
+            name="Zulu or Local"
+            onChange={(value: string) => {
+              setInputZulu(value);
+              console.log(value);
+            }}
+            value={zuluInput}
+            valuesToToggle={["Zulu", "Local"]}
+          />
 
           <Separator marginVertical={10} />
           <ToggleGroupTriple
@@ -76,7 +72,23 @@ export default function TabTwoScreen() {
             }}
             value={soe}
             valuesToToggle={["2+15", "3+15", "3+45"]}
-          ></ToggleGroupTriple>
+          />
+
+          <Separator marginVertical={10} />
+
+          <ToggleGroupTriple
+            size="$3"
+            orientation="horizontal"
+            type="single"
+            name="Ground Time"
+            id="GT"
+            onChange={(value: string) => {
+              setGroundTime(value);
+              console.log("Changing vale: " + value);
+            }}
+            value={groundTime}
+            valuesToToggle={["16+00", "12+00", "10+00"]}
+          />
 
           <Separator marginVertical={10} />
           <ZuluOffset
@@ -84,7 +96,7 @@ export default function TabTwoScreen() {
             buttonChange={buttonChange}
             date={zulu}
             plusOrMinus={plusMinus}
-          ></ZuluOffset>
+          />
         </YStack>
       </ScrollView>
     </SafeAreaView>

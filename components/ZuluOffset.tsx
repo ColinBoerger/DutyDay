@@ -20,28 +20,25 @@ export const ZuluOffset: FC<ZuluOffsetProps> = ({
   plusOrMinus,
 }) => {
   return (
-    <View>
-      <XStack flexWrap="wrap" alignItems="center">
-        <Label style={styles.text} width={100}>
-          Zulu offset
-        </Label>
+    <XStack alignItems="center" justifyContent="flex-end">
+      <Label style={styles.label}>Zulu offset</Label>
 
-        <DateTimePicker
-          testID="dateTimePicker"
-          value={date}
-          mode="time"
-          is24Hour={true}
-          minuteInterval={15}
-          onChange={onChange}
-        />
+      <DateTimePicker
+        testID="dateTimePicker"
+        value={date}
+        mode="time"
+        is24Hour={true}
+        minuteInterval={15}
+        onChange={onChange}
+      />
 
-        <Separator alignSelf="stretch" vertical marginHorizontal={15} />
-        <Button
-          icon={plusOrMinus ? Plus : Minus}
-          onPress={buttonChange}
-        ></Button>
-      </XStack>
-    </View>
+      <Separator alignSelf="stretch" vertical marginHorizontal={15} />
+      <Button
+        icon={plusOrMinus ? Plus : Minus}
+        onPress={buttonChange}
+        aria-label={`Change offset to ${plusOrMinus ? "negative" : "positive"}`}
+      />
+    </XStack>
   );
 };
 const styles = StyleSheet.create({
@@ -50,8 +47,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  text: {
+  label: {
     color: "white",
-    //fontSize: 32,
+    marginRight: "auto",
   },
 });

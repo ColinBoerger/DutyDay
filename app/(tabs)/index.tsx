@@ -8,21 +8,26 @@ import { usePlusMinus } from "@/hooks/usePlusMinus";
 import { useSOE } from "@/hooks/useSOE";
 import { dateBoxStyles } from "@/components/DateBoxStyles";
 import { useZuluInputType } from "@/hooks/useZuluInputType";
+import { useGroundTime } from "@/hooks/useGroundTime";
 
 export default function TabTwoScreen() {
-  const [date, setDate] = useState(new Date(0, 0, 0, 0, 0));
-  const [prevLand, setPrevLand] = useState(
-    new Date(0, 0, 0, date.getHours() - 16, 0)
-  );
-
+  const { groundTime } = useGroundTime();
   const { soe } = useSOE();
   const { zuluInput: zuluOrLocal } = useZuluInputType();
   const { plusMinus } = usePlusMinus();
+  const { zulu: zuluOffset } = useZulu();
+  //@TODO rework the settings so all of them change the values like zulu offset does
+  let groundTimeNum = 16;
+  if (groundTime === "12+00") {
+    groundTimeNum = 12;
+  } else if (groundTime === "10+00") {
+    groundTimeNum = 10;
+  }
+
   let plusOrMinusFactor = 1;
   if (!plusMinus) {
     plusOrMinusFactor = -1;
   }
-
   let oppositeZuluOrLocal = "";
   if (zuluOrLocal === "Zulu") {
     oppositeZuluOrLocal = "Local";
@@ -30,6 +35,7 @@ export default function TabTwoScreen() {
     plusOrMinusFactor = plusOrMinusFactor * -1;
     oppositeZuluOrLocal = "Zulu";
   }
+
   let minutes = 0;
   let hours = 0;
   console.log(soe);
@@ -43,7 +49,12 @@ export default function TabTwoScreen() {
     minutes = 45;
     hours = 3;
   }
+  //@TODO Rework the above code
 
+  const [date, setDate] = useState(new Date(0, 0, 0, 0, 0));
+  const [prevLand, setPrevLand] = useState(
+    new Date(0, 0, 0, date.getHours() - groundTimeNum, 0)
+  );
   const [takeOff, setTakeOff] = useState(
     new Date(0, 0, 0, date.getHours() + hours, date.getMinutes() + minutes)
   );
@@ -81,8 +92,6 @@ export default function TabTwoScreen() {
     date.getMinutes()
   );
 
-  const { zulu: zuluOffset } = useZulu();
-  //  console.log("changing in index", zuluOffset.getHours());
   const prevLandZulu = new Date(
     2000,
     1,
@@ -148,8 +157,8 @@ export default function TabTwoScreen() {
           0,
           0,
           0,
-          selectedDate.getHours() + 16,
-          selectedDate.getMinutes()
+          selectedDate.getHours() + groundTimeNum - hours,
+          selectedDate.getMinutes() - minutes
         )
       );
       setTakeOff(
@@ -157,8 +166,8 @@ export default function TabTwoScreen() {
           0,
           0,
           0,
-          selectedDate.getHours() + 16 + hours,
-          selectedDate.getMinutes() + minutes
+          selectedDate.getHours() + groundTimeNum,
+          selectedDate.getMinutes()
         )
       );
     }
@@ -171,7 +180,7 @@ export default function TabTwoScreen() {
           0,
           0,
           0,
-          selectedDate.getHours() - 16 + hours,
+          selectedDate.getHours() - groundTimeNum + hours,
           selectedDate.getMinutes() + minutes
         )
       );
@@ -206,7 +215,7 @@ export default function TabTwoScreen() {
           0,
           0,
           0,
-          selectedDate.getHours() - 16,
+          selectedDate.getHours() - groundTimeNum,
           selectedDate.getMinutes()
         )
       );
@@ -227,6 +236,7 @@ export default function TabTwoScreen() {
               name="Land Time"
               date={prevLand}
               zuluDate={prevLandZulu}
+              subScript={"Ground time: " + groundTime}
             />
             <DateBox name="Last Beer" date={lastBeer} zuluDate={lastBeerZulu} />
             <DateBox
@@ -239,12 +249,14 @@ export default function TabTwoScreen() {
               name="Alert"
               date={date}
               zuluDate={zuluAlert}
+              subScript={"SOE: " + soe}
             />
             <EditDateBox
               onChange={onChangeTakeOff}
               name="T/O"
               date={takeOff}
               zuluDate={zuluTakeOff}
+              subScript=""
             />
             <DateBox name="Last Tac Event" date={endTac} zuluDate={zuluTac} />
 

@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import { Text } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import { View, XStack } from "tamagui";
+import { Separator, View, XStack, YStack } from "tamagui";
 import { dateBoxStyles } from "./DateBoxStyles";
 
 interface EditDateBoxProps {
@@ -9,6 +9,7 @@ interface EditDateBoxProps {
   name: string;
   date: Date;
   zuluDate: Date;
+  subScript: string;
 }
 
 export const EditDateBox: FC<EditDateBoxProps> = ({
@@ -16,10 +17,14 @@ export const EditDateBox: FC<EditDateBoxProps> = ({
   name,
   date,
   zuluDate,
+  subScript,
 }) => {
   return (
     <XStack style={dateBoxStyles.container}>
-      <Text style={dateBoxStyles.rowName}>{name}</Text>
+      <YStack style={dateBoxStyles.editRowName}>
+        <Text style={dateBoxStyles.editRowName}>{name}</Text>
+        <Text style={dateBoxStyles.subScript}>{subScript}</Text>
+      </YStack>
       <View>
         <DateTimePicker
           testID="dateTimePicker"

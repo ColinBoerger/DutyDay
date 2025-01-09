@@ -27,7 +27,7 @@ export const ToggleGroupTriple: FC<ToggleGroupTripleProps> = ({
     <XStack
       flexDirection={orientation === "horizontal" ? "row" : "column"}
       alignItems="center"
-      justifyContent="center"
+      justifyContent="space-between"
       space="$4"
     >
       <Label paddingRight="$0" size={size} htmlFor={id} width={80}>
@@ -42,6 +42,7 @@ export const ToggleGroupTriple: FC<ToggleGroupTripleProps> = ({
         disableDeactivation={type === "single" ? true : undefined}
         onValueChange={onChange}
         value={value}
+        margin={1}
       >
         <ToggleGroup.Item value={valuesToToggle[0]} width={66}>
           <View>

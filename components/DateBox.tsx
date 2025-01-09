@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import { Text } from "react-native";
-import { View, XStack } from "tamagui";
+import { View, XStack, YStack } from "tamagui";
 import { dateBoxStyles } from "./DateBoxStyles";
 
 interface DateBoxProps {

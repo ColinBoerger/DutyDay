@@ -5,7 +5,6 @@ import React, { FC, useState } from "react";
 interface ToggleGroupDoubleProps {
   size: SizeTokens;
   type: "single" | "multiple";
-  orientation: "vertical" | "horizontal";
   name: string;
   value: string;
   id: string;
@@ -15,7 +14,6 @@ interface ToggleGroupDoubleProps {
 export const ToggleGroupDouble: FC<ToggleGroupDoubleProps> = ({
   size,
   type,
-  orientation,
   name,
   value,
   valuesToToggle,
@@ -23,30 +21,19 @@ export const ToggleGroupDouble: FC<ToggleGroupDoubleProps> = ({
   onChange,
 }) => {
   return (
-    <XStack
-      flexDirection={orientation === "horizontal" ? "row" : "column"}
-      alignItems="center"
-      justifyContent="center"
-    >
-      <Label
-        paddingRight="$0"
-        // justifyContent="flex-end"
-        size={size}
-        htmlFor={id}
-        textWrap="wrap"
-        width={100}
-      >
+    <XStack alignItems="center" justifyContent="space-between">
+      <Label size={size} htmlFor={id} textWrap="wrap" width={100}>
         {name}
       </Label>
 
       <ToggleGroup
-        orientation={orientation}
         id={id}
         type={type as any} // since this demo switches between loosen types
         size={size}
         disableDeactivation={type === "single" ? true : undefined}
         onValueChange={onChange}
         value={value}
+        margin={1}
       >
         <ToggleGroup.Item value={valuesToToggle[0]} width={100}>
           <Text>{valuesToToggle[0]}</Text>

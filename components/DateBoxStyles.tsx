@@ -11,10 +11,24 @@ export const dateBoxStyles = StyleSheet.create({
     alignItems: "center",
     gap: 30,
     backgroundColor: "black",
+    height: 60,
   },
   rowName: {
     color: "white",
-    fontSize: 14,
+    fontSize: 16,
+    // fontWeight: "bold",
+    flex: 1,
+  },
+  subScript: {
+    color: "white",
+    fontSize: 8,
+    // fontWeight: "bold",
+    flex: 1,
+  },
+  editRowName: {
+    color: "white",
+    fontSize: 18,
+    fontWeight: "bold",
     flex: 1,
   },
   textDate: {
