@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, SafeAreaView } from "react-native";
 import { EditDateBox } from "@/components/EditableDateBox";
 import { ScrollView, XStack, YStack, Text, View } from "tamagui";
@@ -16,7 +16,8 @@ export default function TabTwoScreen() {
   const { zuluInput: zuluOrLocal } = useZuluInputType();
   const { plusMinus } = usePlusMinus();
   const { zulu: zuluOffset } = useZulu();
-  //@TODO rework the settings so all of them change the values like zulu offset does
+
+  //@TODO Rework code within this comment to not use a let
   let groundTimeNum = 16;
   if (groundTime === "12+00") {
     groundTimeNum = 12;
@@ -35,29 +36,25 @@ export default function TabTwoScreen() {
     plusOrMinusFactor = plusOrMinusFactor * -1;
     oppositeZuluOrLocal = "Zulu";
   }
-
-  let minutes = 0;
-  let hours = 0;
-  console.log(soe);
-  if (soe === "2+15") {
-    minutes = 15;
-    hours = 2;
-  } else if (soe === "3+15") {
-    minutes = 15;
-    hours = 3;
-  } else if (soe === "3+45") {
-    minutes = 45;
-    hours = 3;
-  }
-  //@TODO Rework the above code
-
+  //@TODO
+  console.log(soe.at(0));
   const [date, setDate] = useState(new Date(0, 0, 0, 0, 0));
   const [prevLand, setPrevLand] = useState(
     new Date(0, 0, 0, date.getHours() - groundTimeNum, 0)
   );
+  useEffect(() => {
+    setPrevLand(new Date(0, 0, 0, date.getHours() - groundTimeNum, 0));
+  }, [groundTime]);
+
   const [takeOff, setTakeOff] = useState(
-    new Date(0, 0, 0, date.getHours() + hours, date.getMinutes() + minutes)
+    new Date(0, 0, 0, date.getHours() + soe[0], date.getMinutes() + soe[1])
   );
+
+  useEffect(() => {
+    setTakeOff(
+      new Date(0, 0, 0, date.getHours() + soe[0], date.getMinutes() + soe[1])
+    );
+  }, [soe]);
 
   const lastBeer = new Date(
     2000,
@@ -149,6 +146,7 @@ export default function TabTwoScreen() {
     endAugDutyDay.getHours() + (zuluOffset?.getHours() ?? 0),
     endAugDutyDay.getMinutes() + (zuluOffset?.getMinutes() ?? 0)
   );
+
   const onChangeLand = (_: any, selectedDate?: Date) => {
     if (selectedDate) {
       setPrevLand(selectedDate);
@@ -157,8 +155,8 @@ export default function TabTwoScreen() {
           0,
           0,
           0,
-          selectedDate.getHours() + groundTimeNum - hours,
-          selectedDate.getMinutes() - minutes
+          selectedDate.getHours() + groundTimeNum - soe[0],
+          selectedDate.getMinutes() - soe[1]
         )
       );
       setTakeOff(
@@ -173,6 +171,7 @@ export default function TabTwoScreen() {
     }
     return prevLand;
   };
+
   const onChange = (_: any, selectedDate?: Date) => {
     if (selectedDate) {
       setPrevLand(
@@ -180,8 +179,8 @@ export default function TabTwoScreen() {
           0,
           0,
           0,
-          selectedDate.getHours() - groundTimeNum + hours,
-          selectedDate.getMinutes() + minutes
+          selectedDate.getHours() - groundTimeNum + soe[0],
+          selectedDate.getMinutes() + soe[1]
         )
       );
       setDate(selectedDate);
@@ -190,8 +189,8 @@ export default function TabTwoScreen() {
           0,
           0,
           0,
-          selectedDate.getHours() + hours,
-          selectedDate.getMinutes() + minutes
+          selectedDate.getHours() + soe[0],
+          selectedDate.getMinutes() + soe[1]
         )
       );
     }
@@ -206,8 +205,8 @@ export default function TabTwoScreen() {
           0,
           0,
           0,
-          selectedDate.getHours() - hours,
-          selectedDate.getMinutes() - minutes
+          selectedDate.getHours() - soe[0],
+          selectedDate.getMinutes() - soe[1]
         )
       );
       setPrevLand(
@@ -222,6 +221,7 @@ export default function TabTwoScreen() {
     }
     return takeOff;
   };
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView maxHeight="90%" width="90%" padding="$2" borderRadius="$4">
@@ -249,7 +249,7 @@ export default function TabTwoScreen() {
               name="Alert"
               date={date}
               zuluDate={zuluAlert}
-              subScript={"SOE: " + soe}
+              subScript={"SOE: " + soe[0] + ":" + soe[1]}
             />
             <EditDateBox
               onChange={onChangeTakeOff}

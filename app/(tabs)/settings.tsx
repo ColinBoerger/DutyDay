@@ -15,7 +15,6 @@ export default function TabTwoScreen() {
   const { groundTime, setGroundTime } = useGroundTime();
   const { zulu, setZulu } = useZulu();
   const { plusMinus, setPlusMinus } = usePlusMinus();
-  // const { dutyDay, setDutyDay } = useDutyDayType();
   const { zuluInput, setInputZulu } = useZuluInputType();
   const zuluChange = (event: any, selectedDate?: Date) => {
     if (selectedDate) {
@@ -27,25 +26,17 @@ export default function TabTwoScreen() {
     setPlusMinus(!plusMinus);
     console.log(!plusMinus);
   };
-
+  let soeString = "2+15";
+  if (soe[0] === 3 && soe[1] === 15) {
+    soeString = "3+15";
+  } else if (soe[0] === 3 && soe[1] === 45) {
+    soeString = "3+45";
+  }
   //@TODO Add ground time slider
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView width="90%" padding="$4">
         <YStack overflow="hidden" gap="$2">
-          {/* <ToggleGroupDouble
-            size="$3"
-            id="DUTYDAY TYPE"
-            type="single"
-            name="Duty Day Type"
-            onChange={(value: string) => {
-              setDutyDay(value);
-              console.log(value);
-            }}
-            value={dutyDay}
-            valuesToToggle={["Normal", "Augmented"]}
-          />
-          <Separator marginVertical={10} /> */}
           <ToggleGroupDouble
             size="$3"
             id="DUTYDAY TYPE"
@@ -67,10 +58,19 @@ export default function TabTwoScreen() {
             name="SOE"
             id="SOE-1"
             onChange={(value: string) => {
-              setSOE(value);
-              console.log("Changing vale: " + value);
+              console.log("Type of " + (soe[0] + soe[1]));
+              if (value === "2+15") {
+                setSOE([2, 15]);
+                return "2+15";
+              } else if (value === "3+15") {
+                setSOE([3, 15]);
+                return "3+15";
+              } else {
+                setSOE([3, 45]);
+                return "3+45";
+              }
             }}
-            value={soe}
+            value={soeString}
             valuesToToggle={["2+15", "3+15", "3+45"]}
           />
 

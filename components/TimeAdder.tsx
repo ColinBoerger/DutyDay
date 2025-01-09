@@ -1,5 +1,5 @@
 import { Text } from "react-native";
-import { Button, Separator, XStack, YStack } from "tamagui";
+import { Button, Separator, View, XStack, YStack } from "tamagui";
 import { dateBoxStyles } from "./DateBoxStyles";
 import { FC, useState } from "react";
 
@@ -36,8 +36,8 @@ export const TimeAdder: FC<TimeAdderProps> = ({
     date1.getMinutes() + date2.getMinutes() * multiplier
   );
   return (
-    <YStack style={styles.container}>
-      <Text style={styles.header}>Time Calc 1</Text>
+    <YStack style={styles.container} overflow="hidden" gap="$2">
+      <Text style={styles.header}>Clock Calc 1</Text>
       <DateTimePicker
         testID="add1"
         value={date1}
@@ -66,8 +66,7 @@ export const TimeAdder: FC<TimeAdderProps> = ({
           minuteInterval={1}
         />
       </XStack>
-
-      <Separator />
+      <Separator alignSelf="center" width={175} marginVertical={1} />
       <Text style={dateBoxStyles.textDate}>{generateDate(dateResult)}</Text>
     </YStack>
   );

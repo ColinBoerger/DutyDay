@@ -32,7 +32,7 @@ export const ZuluOffset: FC<ZuluOffsetProps> = ({
         onChange={onChange}
       />
 
-      <Separator alignSelf="stretch" vertical marginHorizontal={15} />
+      <Separator alignSelf="stretch" vertical marginHorizontal={30} />
       <Button
         icon={plusOrMinus ? Plus : Minus}
         onPress={buttonChange}
