@@ -1,5 +1,5 @@
 import { Stack } from "expo-router";
-import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
+import { SafeAreaView, StyleSheet } from "react-native";
 
 import { TimeAdder } from "@/components/TimeAdder";
 import { useState } from "react";

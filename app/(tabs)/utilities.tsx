@@ -11,19 +11,7 @@ export default function TabTwoScreen() {
             <Link href="/timeCalc" style={styles.box}>
               Time Calculator
             </Link>
-            <Link href="/timeCalc" style={styles.box}>
-              Triangle Math
-            </Link>
-            <Link href="/timeCalc" style={styles.box}>
-              Time Calculator
-            </Link>
-            <Link href="/timeCalc" style={styles.box}>
-              Triangle Math
-            </Link>
-            <Link href="/timeCalc" style={styles.box}>
-              Time Calculator
-            </Link>
-            <Link href="/timeCalc" style={styles.box}>
+            <Link href="/triangleMath" style={styles.box}>
               Triangle Math
             </Link>
           </YStack>
