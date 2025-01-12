@@ -36,15 +36,12 @@ export default function TabTwoScreen() {
     plusOrMinusFactor = plusOrMinusFactor * -1;
     oppositeZuluOrLocal = "Zulu";
   }
-  //@TODO
+
   console.log(soe.at(0));
   const [date, setDate] = useState(new Date(0, 0, 0, 0, 0));
   const [prevLand, setPrevLand] = useState(
     new Date(0, 0, 0, date.getHours() - groundTimeNum, 0)
   );
-  useEffect(() => {
-    setPrevLand(new Date(0, 0, 0, date.getHours() - groundTimeNum, 0));
-  }, [groundTime]);
 
   const [takeOff, setTakeOff] = useState(
     new Date(0, 0, 0, date.getHours() + soe[0], date.getMinutes() + soe[1])
@@ -55,6 +52,10 @@ export default function TabTwoScreen() {
       new Date(0, 0, 0, date.getHours() + soe[0], date.getMinutes() + soe[1])
     );
   }, [soe]);
+
+  useEffect(() => {
+    setPrevLand(new Date(0, 0, 0, takeOff.getHours() - groundTimeNum, 0));
+  }, [groundTime]);
 
   const lastBeer = new Date(
     2000,

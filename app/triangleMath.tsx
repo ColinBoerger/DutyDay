@@ -4,6 +4,7 @@ import { SafeAreaView, StyleSheet } from "react-native";
 import { Button, Input, Label, Separator, XStack, YStack } from "tamagui";
 
 export default function TriangleMath() {
+  //@TODO add functionality and an alert if the triangle is valid
   return (
     <>
       <Stack.Screen
@@ -44,6 +45,21 @@ export default function TriangleMath() {
     </>
   );
 }
+
+const validTriangleLegs = (a: number, b: number, c: number) => {
+  if (a > b && a > c) {
+    if (a > b + c) return true;
+  } else if (b > a && b > c) {
+    if (b > a + c) return true;
+  } else if (c > b && c > a) {
+    if (c > b + a) return true;
+  }
+  return false;
+};
+
+const validTriangleAngles = (a: number, b: number, c: number) => {
+  //@TODO give valid inputs
+};
 
 const styles = StyleSheet.create({
   link: {

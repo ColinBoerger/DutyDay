@@ -43,7 +43,6 @@ export default function TabTwoScreen() {
             name="Zulu or Local"
             onChange={(value: string) => {
               setInputZulu(value);
-              console.log(value);
             }}
             value={zuluInput}
             valuesToToggle={["Zulu", "Local"]}
@@ -57,7 +56,6 @@ export default function TabTwoScreen() {
             name="SOE"
             id="SOE-1"
             onChange={(value: string) => {
-              console.log("Type of " + (soe[0] + soe[1]));
               if (value === "2+15") {
                 setSOE([2, 15]);
                 return "2+15";
@@ -83,7 +81,6 @@ export default function TabTwoScreen() {
             id="GT"
             onChange={(value: string) => {
               setGroundTime(value);
-              console.log("Changing vale: " + value);
             }}
             value={groundTime}
             valuesToToggle={["16+00", "12+00", "10+00"]}
