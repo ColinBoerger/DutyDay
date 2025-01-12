@@ -2,11 +2,10 @@ import { ToggleGroupDouble } from "@/components/ToggleGroupDouble";
 import { ToggleGroupTriple } from "@/components/ToggleGroupTriple";
 import { ZuluOffset } from "@/components/ZuluOffset";
 import { StyleSheet, SafeAreaView } from "react-native";
-import { YStack, ScrollView, Separator, View } from "tamagui";
+import { YStack, ScrollView, Separator } from "tamagui";
 import { useZulu } from "@/hooks/useZulu";
 import { usePlusMinus } from "@/hooks/usePlusMinus";
 import { useSOE } from "@/hooks/useSOE";
-import { useDutyDayType } from "@/hooks/useDutyDayType";
 import { useZuluInputType } from "@/hooks/useZuluInputType";
 import { useGroundTime } from "@/hooks/useGroundTime";
 
