@@ -1,9 +1,27 @@
-import { Triangle } from "@tamagui/lucide-icons";
+import { TriangleRight } from "@tamagui/lucide-icons";
 import { Stack } from "expo-router";
+import { useState } from "react";
 import { SafeAreaView, StyleSheet } from "react-native";
-import { Button, Input, Label, Separator, XStack, YStack } from "tamagui";
+import {
+  Button,
+  Input,
+  Label,
+  Separator,
+  XStack,
+  YStack,
+  Square,
+} from "tamagui";
 
 export default function TriangleMath() {
+  const [aSide, setASide] = useState(0);
+  const [aAngle, setAAngle] = useState(90);
+
+  const [bSide, setBSide] = useState(0);
+  const [bAngle, setBAngle] = useState(Number);
+
+  const [cSide, setCSide] = useState(0);
+  const [cAngle, setCAngle] = useState(0);
+
   //@TODO add functionality and an alert if the triangle is valid
   return (
     <>
@@ -16,7 +34,7 @@ export default function TriangleMath() {
       <SafeAreaView>
         <XStack justifyContent="center" alignItems="center">
           <Label style={styles.triangleLabels}>A</Label>
-          <Triangle size={200}></Triangle>
+          <TriangleRight size={200}></TriangleRight>
           <Label style={styles.triangleLabels}>B</Label>
         </XStack>
         <XStack justifyContent="center" alignItems="center">
@@ -26,8 +44,8 @@ export default function TriangleMath() {
         <Separator marginVertical={10} />
         <YStack padding="$1" gap="$2">
           <XStack justifyContent="center" gap={10}>
-            <Input size={10} width={100} placeholder={`A `} />
-            <Input size={10} width={100} placeholder={`A ∠`} />
+            <Input size={10} width={100} placeholder={`A`} />
+            <Input size={10} width={100} placeholder={`90`} />
           </XStack>
           <XStack justifyContent="center" gap={10}>
             <Input size={10} width={100} placeholder={`B`} />
